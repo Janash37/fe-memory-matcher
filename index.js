@@ -1,13 +1,27 @@
+//DOM CACHE
 const animalPics = document.getElementsByClassName("grid-square");
-const cards = Array.from(animalPics);
-const imagesSources = ["./images/bee.jpg", "./images/frog.png"];
-const indexesArray = [];
+const startButton = document.getElementById("start-button");
+const guesses = document.getElementById("guesses")
+const guessesParent = document.getElementById("guesses-parent")
+const grid = document.getElementById("grid")
+const victoryMessage = document.getElementById('victory-message')
+const victoryDetails = document.getElementById('victory-details')
 
+const cards = Array.from(animalPics);
+const imagesSources = ["./images/bee.jpg", "./images/frog.png", "./images/anteater.jpg", "./images/cat.jpg"];
+
+let initialised = false;
+let indexesArray = [];
 let count = 0;
+let numOfGuesses = 0;
 let clickedImages = [];
 
 const victory = () => {
-  console.log("YOU WIN");
+  grid.style.display = "none"
+  victoryMessage.textContent = "You done won."
+  victoryDetails.textContent = `It took you ${numOfGuesses} guesses!`
+  startButton.innerText = "Play Again?"
+  guessesParent.style.display = 'none'
 };
 
 const checkWin = () => {
@@ -23,6 +37,8 @@ const checkWin = () => {
 };
 
 const checkMatch = () => {
+  numOfGuesses++;
+  guesses.textContent = numOfGuesses;
   count = 0;
   if (clickedImages[0].src !== clickedImages[1].src) {
     clickedImages[0].style.display = "none";
@@ -35,11 +51,13 @@ const checkMatch = () => {
 };
 
 const turnOver = (event) => {
-  event.target.firstElementChild.style.display = "block";
-  count++;
-  clickedImages.push(event.target.firstElementChild);
-  if (count === 2) {
-    setTimeout(checkMatch, 2000);
+  if (count < 2) {
+    event.target.firstElementChild.style.display = "block";
+    count++;
+    clickedImages.push(event.target.firstElementChild);
+    if (count === 2) {
+      setTimeout(checkMatch, 500);
+    }
   }
 };
 
@@ -49,18 +67,41 @@ const assignSource = (source) => {
     cards[index].firstElementChild.src = source;
     indexesArray.push(index);
   } else {
-    console.log("<<< inside recursion");
     assignSource(source);
   }
 };
 
-//EVENT LISTENERS
+const randomiseCards = () => {
+  cards.forEach(card => card.firstElementChild.src = '');
+  indexesArray = []
+  imagesSources.forEach((source) => {
+    assignSource(source);
+    assignSource(source);
+  });
+}
 
-cards.forEach((card) => {
-  card.addEventListener("click", turnOver);
-});
+const initialise = () => {
+  initialised = true
+  cards.forEach((card) => {
+    card.addEventListener("click", turnOver);
+  });
+}
 
-imagesSources.forEach((source) => {
-  assignSource(source);
-  assignSource(source);
-});
+const reset = () => {
+  startButton.innerText = "Let's play!"
+  grid.style.display = "grid"
+  victoryDetails.style.display = 'none'
+  victoryMessage.style.display = 'none'
+  guessesParent.style.display = 'block'
+  numOfGuesses = 0;
+  guesses.textContent = numOfGuesses
+  cards.forEach(card => {
+    card.firstElementChild.style.display = "none"
+  })
+}
+
+startButton.addEventListener('click', () => {
+  if (!initialised) initialise();
+  else reset();
+  randomiseCards();
+})
