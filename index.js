@@ -8,6 +8,7 @@ const guessesParent = document.getElementById("guesses-parent");
 const grid = document.getElementById("grid");
 const victoryMessage = document.getElementById("victory-message");
 const victoryDetails = document.getElementById("victory-details");
+let username = document.getElementById("user-name")
 
 const cards = Array.from(animalPics);
 const imagesSources = [
@@ -25,7 +26,7 @@ let clickedImages = [];
 
 const victory = () => {
   grid.style.display = "none";
-  victoryMessage.textContent = "You done won.";
+  victoryMessage.textContent = `Well done ${username}! You did it.`;
   victoryMessage.style.display = "block";
   victoryDetails.textContent = `It took you ${numOfGuesses} guesses!`;
   victoryDetails.style.display = "block";
@@ -116,6 +117,7 @@ startButton.addEventListener("click", () => {
 });
 
 submitName.addEventListener("click", () => {
-  cover.classList.remove("cover");
   cover.classList.add("hide-cover");
+  setTimeout(() => {cover.style.display = "none"}, 900)
+  username = document.getElementById("user-name").value
 });

@@ -12,7 +12,8 @@ body {
 }
 
 #landing-page {
-  background-color: gray;
+  background-color: hsl(195, 30%, 49%);
+  color: hsl(34, 18%, 91%);
   height: 100vh;
   width: 100vw;
   position: absolute;
@@ -20,26 +21,23 @@ body {
 }
 
 form {
-  margin-top: 5rem;
-}
-
-.fadeout {
-  transition-duration: 1.5s;
-}
-
-.cover {
-  display: block;
+  font-size: 2rem;
+  margin-top: 40%;
 }
 
 .hide-cover {
   opacity: 0;
-  transform: translate(5rem, 0);
-  display: none;
+  transition: 1s
+}
+
+#user-name {
+  height: 2rem;
+  transform: translate(0, -0.3rem);
 }
 
 h1 {
   background-color: hsl(177, 74%, 40%);
-  color: hsl(46, 99%, 60%);
+  color: #feda67;
   padding: 1rem 0;
 }
 
@@ -70,7 +68,7 @@ h1 {
   display: none;
 }
 
-#start-button {
+button {
   height: 5rem;
   width: 11rem;
   margin: 1rem;
@@ -83,12 +81,12 @@ h1 {
   border-radius: 45%;
 }
 
-#start-button:hover {
+button:hover {
   cursor: pointer;
   background-color: hsl(46, 99%, 60%);
 }
 
-#start-button:active {
+button:active {
   box-shadow: 1px 1px 5px black;
 }
 
