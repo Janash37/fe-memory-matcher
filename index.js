@@ -6,6 +6,7 @@ const startButton = document.getElementById("start-button");
 const guesses = document.getElementById("guesses");
 const guessesParent = document.getElementById("guesses-parent");
 const grid = document.getElementById("grid");
+const victoryParent = document.getElementById("victory-parent")
 const victoryMessage = document.getElementById("victory-message");
 const victoryDetails = document.getElementById("victory-details");
 let username = document.getElementById("user-name")
@@ -25,11 +26,12 @@ let numOfGuesses = 0;
 let clickedImages = [];
 
 const victory = () => {
-  grid.style.display = "none";
+  grid.classList.add('fadeout')
+  grid.style.position = 'absolute'
+  victoryParent.style.display = 'block';
+  victoryParent.classList.add('fadein')
   victoryMessage.textContent = `Well done ${username}! You did it.`;
-  victoryMessage.style.display = "block";
   victoryDetails.textContent = `It took you ${numOfGuesses} guesses!`;
-  victoryDetails.style.display = "block";
   startButton.innerText = "Play Again?";
   guessesParent.style.display = "none";
 };
@@ -98,10 +100,12 @@ const initialise = () => {
 };
 
 const reset = () => {
+  grid.classList.remove('fadeout')
+  grid.style.position = 'relative'
+  victoryParent.classList.remove('fadein')
   startButton.innerText = "Let's play!";
   grid.style.display = "grid";
-  victoryDetails.style.display = "none";
-  victoryMessage.style.display = "none";
+  victoryParent.style.display = 'none';
   guessesParent.style.display = "block";
   numOfGuesses = 0;
   guesses.textContent = numOfGuesses;
