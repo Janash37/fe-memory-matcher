@@ -1,14 +1,21 @@
 //DOM CACHE
+const submitName = document.getElementById("form-button");
+const cover = document.getElementById("landing-page");
 const animalPics = document.getElementsByClassName("grid-square");
 const startButton = document.getElementById("start-button");
-const guesses = document.getElementById("guesses")
-const guessesParent = document.getElementById("guesses-parent")
-const grid = document.getElementById("grid")
-const victoryMessage = document.getElementById('victory-message')
-const victoryDetails = document.getElementById('victory-details')
+const guesses = document.getElementById("guesses");
+const guessesParent = document.getElementById("guesses-parent");
+const grid = document.getElementById("grid");
+const victoryMessage = document.getElementById("victory-message");
+const victoryDetails = document.getElementById("victory-details");
 
 const cards = Array.from(animalPics);
-const imagesSources = ["./images/bee.jpg", "./images/frog.png", "./images/anteater.jpg", "./images/cat.jpg"];
+const imagesSources = [
+  "./images/bee.jpg",
+  "./images/frog.png",
+  "./images/anteater.jpg",
+  "./images/cat.jpg",
+];
 
 let initialised = false;
 let indexesArray = [];
@@ -17,11 +24,13 @@ let numOfGuesses = 0;
 let clickedImages = [];
 
 const victory = () => {
-  grid.style.display = "none"
-  victoryMessage.textContent = "You done won."
-  victoryDetails.textContent = `It took you ${numOfGuesses} guesses!`
-  startButton.innerText = "Play Again?"
-  guessesParent.style.display = 'none'
+  grid.style.display = "none";
+  victoryMessage.textContent = "You done won.";
+  victoryMessage.style.display = "block";
+  victoryDetails.textContent = `It took you ${numOfGuesses} guesses!`;
+  victoryDetails.style.display = "block";
+  startButton.innerText = "Play Again?";
+  guessesParent.style.display = "none";
 };
 
 const checkWin = () => {
@@ -72,36 +81,41 @@ const assignSource = (source) => {
 };
 
 const randomiseCards = () => {
-  cards.forEach(card => card.firstElementChild.src = '');
-  indexesArray = []
+  cards.forEach((card) => (card.firstElementChild.src = ""));
+  indexesArray = [];
   imagesSources.forEach((source) => {
     assignSource(source);
     assignSource(source);
   });
-}
+};
 
 const initialise = () => {
-  initialised = true
+  initialised = true;
   cards.forEach((card) => {
     card.addEventListener("click", turnOver);
   });
-}
+};
 
 const reset = () => {
-  startButton.innerText = "Let's play!"
-  grid.style.display = "grid"
-  victoryDetails.style.display = 'none'
-  victoryMessage.style.display = 'none'
-  guessesParent.style.display = 'block'
+  startButton.innerText = "Let's play!";
+  grid.style.display = "grid";
+  victoryDetails.style.display = "none";
+  victoryMessage.style.display = "none";
+  guessesParent.style.display = "block";
   numOfGuesses = 0;
-  guesses.textContent = numOfGuesses
-  cards.forEach(card => {
-    card.firstElementChild.style.display = "none"
-  })
-}
+  guesses.textContent = numOfGuesses;
+  cards.forEach((card) => {
+    card.firstElementChild.style.display = "none";
+  });
+};
 
-startButton.addEventListener('click', () => {
+startButton.addEventListener("click", () => {
   if (!initialised) initialise();
   else reset();
   randomiseCards();
-})
+});
+
+submitName.addEventListener("click", () => {
+  cover.classList.remove("cover");
+  cover.classList.add("hide-cover");
+});
